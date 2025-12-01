@@ -1,1 +1,21 @@
-
+/opt/devops-scripts/
+  level1/
+    user_setup.sh
+    project_dir_setup.sh
+    install_packages.sh
+    system_info.sh
+  level2/
+    backup_project.sh
+    cleanup_logs.sh
+    restart_myapp.sh
+    check_myapp_health.sh
+    setup_app_logs.sh
+    system_health_check.sh
+  level3/
+    myapp.service
+    deploy_systemd_service.sh
+    harden_ssh.sh
+    setup_lvm.sh
+    setup_firewall.sh
+    myapp.logrotate
+    install_logrotate_myapp.sh
