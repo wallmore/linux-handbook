@@ -25,6 +25,7 @@ echo "==== Memory ===="
 free -h
 
 echo
+.
 echo "==== Disk Usage ===="
 df -hT
 
