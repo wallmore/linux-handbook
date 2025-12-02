@@ -1,17 +1,12 @@
-# System Information Commands
+#!/bin/bash
+# ---------- 4. System Information ----------
+echo "➤ System Information Summary:"
+echo "CPU Info:"
+lscpu | head -5
 
-## CPU Info
-lscpu
-
-## Memory
+echo -e "\nMemory Info:"
 free -h
 
-## Disk Usage
-df -h
-
-## Partition Info
-lsblk
-
-## System Details
-cat /etc/os-release
-uname -a
+echo -e "\nDisk Info:"
+df -h /
+echo

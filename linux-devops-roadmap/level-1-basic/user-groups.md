@@ -1,21 +1,13 @@
-# User & Group Management
+#!/bin/bash
+# ---------- 1. Create Users & Groups ----------
+echo "➤ Creating dev group and users..."
 
-## Create User
-sudo useradd devuser
-sudo passwd devuser
+groupadd devteam 2>/dev/null
 
-## Create Group
-sudo groupadd devteam
+for user in dev1 dev2 dev3; do
+    useradd -m -G devteam $user 2>/dev/null
+done
 
-## Add User to Group
-sudo usermod -aG devteam devuser
-
-## Verify
-id devuser
-groups devuser
-
-## Delete User
-sudo userdel devuser
-
-## Delete Group
-sudo groupdel devteam
+echo "✔ Users created. Current dev users:"
+grep "dev" /etc/passwd
+echo

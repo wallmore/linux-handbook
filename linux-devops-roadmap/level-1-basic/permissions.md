@@ -1,19 +1,12 @@
-# Linux File Permissions & Ownership
+#!/bin/bash
+# ---------- 2. Manage Directory Permissions ----------
+echo "➤ Setting up /project directory with devteam permissions..."
 
-## Change Owner
-sudo chown user:group file
+mkdir -p /project
+chown :devteam /project
+chmod 2775 /project  # group inheritance
 
-## Change Permissions
-chmod 755 file
-chmod -R 770 /opt/project
+echo "✔ Directory permissions applied:"
+ls -ld /project
+echo
 
-## Permission bits:
-r = read
-w = write
-x = execute
-
-## Set SGID
-sudo chmod g+s /opt/project
-
-## Set Sticky Bit
-sudo chmod +t /shared-folder
