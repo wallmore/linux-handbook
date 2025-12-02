@@ -1,16 +1,17 @@
-# Logrotate Setup
+#!/bin/bash
+# ---------- 5. Logrotate configuration ----------
+echo "➤ Creating logrotate config for /var/log/myapp.log..."
 
-## Create Rule
-sudo nano /etc/logrotate.d/myapp
-
-/opt/myapp/logs/*.log {
-    daily
-    rotate 7
+cat <<EOF > /etc/logrotate.d/myapp
+/var/log/myapp.log {
+    weekly
+    rotate 4
     compress
     missingok
     notifempty
-    copytruncate
 }
+EOF
 
-## Test
-sudo logrotate -d /etc/logrotate.d/myapp
+echo "✔ Logrotate config added"
+logrotate -d /etc/logrotate.d/myapp
+echo

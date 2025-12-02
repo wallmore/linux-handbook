@@ -1,11 +1,16 @@
-# Firewall Configuration
+#!/bin/bash
+# ---------- 4. Firewall rules ----------
+echo "➤ Applying firewall rules for HTTP/HTTPS..."
 
-## UFW (Ubuntu)
-sudo ufw enable
-sudo ufw allow 22
-sudo ufw allow 80
-sudo ufw allow 443
+if command -v firewall-cmd >/dev/null 2>&1; then
+    firewall-cmd --add-service=http --permanent
+    firewall-cmd --add-service=https --permanent
+    firewall-cmd --reload
+else
+    ufw allow 80
+    ufw allow 443
+    ufw reload
+fi
 
-## Firewalld
-sudo firewall-cmd --add-port=8080/tcp --permanent
-sudo firewall-cmd --reload
+echo "✔ Firewall configured for ports 80 & 443"
+echo

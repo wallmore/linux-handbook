@@ -1,20 +1,26 @@
-# Custom Systemd Service
+#!/bin/bash
+# ---------- 1. Custom systemd service ----------
+echo "➤ Creating systemd service for MyApp..."
 
-## Create Service
-sudo nano /etc/systemd/system/myapp.service
+APP_SERVICE="/etc/systemd/system/myapp.service"
 
+cat <<EOF > $APP_SERVICE
 [Unit]
-Description=My App
+Description=My Application Service
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/java -jar /opt/myapp/app.jar
-Restart=on-failure
+ExecStart=/usr/local/bin/myapp.sh
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
+EOF
 
-## Enable & Start
-sudo systemctl daemon-reload
-sudo systemctl enable myapp
-sudo systemctl start myapp
+systemctl daemon-reload
+systemctl enable myapp.service
+
+echo "✔ systemd service created:"
+systemctl status myapp.service | head
+echo
+

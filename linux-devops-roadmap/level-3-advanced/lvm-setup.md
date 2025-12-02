@@ -1,16 +1,6 @@
-# LVM Setup
-
-## Create PV
-sudo pvcreate /dev/xvdb
-
-## Create VG
-sudo vgcreate appvg /dev/xvdb
-
-## Create LV
-sudo lvcreate -L 10G -n applv appvg
-
-## Format LV
-sudo mkfs.ext4 /dev/appvg/applv
-
-## Mount
-sudo mount /dev/appvg/applv /mnt/appdata
+#!/bin/bash
+# ---------- 3. LVM Setup Example ----------
+echo "➤ Showing available disks for LVM setup..."
+lsblk
+echo "NOTE: Actual LVM setup requires selecting a real disk."
+echo
