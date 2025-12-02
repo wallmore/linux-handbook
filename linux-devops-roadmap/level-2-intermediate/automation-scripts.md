@@ -6,7 +6,9 @@ echo "➤ Creating cleanup, restart, and health check scripts..."
 cat <<EOF > /usr/local/bin/clean_logs.sh
 #!/bin/bash
 find /var/log -type f -name "*.log" -mtime +7 -exec rm -f {} \;
-EOF
+echo "Old logs cleared"
+
+
 
 # Service restart script
 cat <<EOF > /usr/local/bin/restart_services.sh

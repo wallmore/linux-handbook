@@ -1,18 +1,22 @@
 #!/bin/bash
-# ---------- 1. Backup Automation via Cron ----------
-echo "➤ Creating daily backup script..."
+# ---- Backup config ----
+BACKUP_DIR="/backup/devteam"
+mkdir -p $BACKUP_DIR
 
-BACKUP_SCRIPT="/usr/local/bin/backup.sh"
-
-cat <<EOF > $BACKUP_SCRIPT
+# ---- Create backup script ----
+cat << 'EOF' > /usr/local/bin/dev_backup.sh
 #!/bin/bash
-tar -czvf /backup/project_\$(date +%F).tar.gz /project
+BDIR="/backup/devteam"
+DATE=$(date +%F)
+USERS=$(getent group devteam | awk -F: '{print $4}' | tr ',' ' ')
+for u in $USERS; do
+  [ -d /home/$u ] && tar -czf $BDIR/${u}_$DATE.tar.gz /home/$u
+done
+find $BDIR -type f -mtime +7 -delete
 EOF
+chmod +x /usr/local/bin/dev_backup.sh
 
-chmod +x $BACKUP_SCRIPT
+# ---- Cron job (daily @ 2 AM) ----
+echo "0 2 * * * root /usr/local/bin/dev_backup.sh" > /etc/cron.d/dev_backup
 
-(crontab -l 2>/dev/null; echo "0 2 * * * $BACKUP_SCRIPT") | crontab -
-
-echo "✔ Backup cron job added:"
-crontab -l
-echo
+echo "✔ Setup complete ( backup + cron )"
