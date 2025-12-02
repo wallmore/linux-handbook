@@ -1,16 +1,6 @@
-# Monitoring & Troubleshooting
+#!/bin/bash
+# ---------- 4. Performance Monitoring ----------
+echo "➤ Running services:"
+systemctl list-units --type=service --state=running | head
+echo
 
-## CPU Load
-top
-htop
-
-## Memory
-free -h
-
-## Network Monitoring
-iftop
-ip -s link
-
-## Service Debugging
-systemctl status nginx
-journalctl -u nginx

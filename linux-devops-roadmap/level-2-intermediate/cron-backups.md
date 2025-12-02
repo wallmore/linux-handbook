@@ -1,10 +1,18 @@
-# Automate Backups with Cron
+#!/bin/bash
+# ---------- 1. Backup Automation via Cron ----------
+echo "➤ Creating daily backup script..."
 
-## Edit Crontab
-crontab -e
+BACKUP_SCRIPT="/usr/local/bin/backup.sh"
 
-## Backup at 2 AM daily
-0 2 * * * tar -czf /backup/app_$(date +\%F).tgz /opt/app
+cat <<EOF > $BACKUP_SCRIPT
+#!/bin/bash
+tar -czvf /backup/project_\$(date +%F).tar.gz /project
+EOF
 
-## List Cron Jobs
+chmod +x $BACKUP_SCRIPT
+
+(crontab -l 2>/dev/null; echo "0 2 * * * $BACKUP_SCRIPT") | crontab -
+
+echo "✔ Backup cron job added:"
 crontab -l
+echo

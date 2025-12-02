@@ -1,16 +1,32 @@
-# Shell Automation Scripts
-
-## Log Cleanup Script
 #!/bin/bash
-find /var/log -type f -mtime +7 -delete
+# ---------- 2. Utility automation scripts ----------
+echo "➤ Creating cleanup, restart, and health check scripts..."
 
-## Restart Service Script
+# Log cleanup script
+cat <<EOF > /usr/local/bin/clean_logs.sh
+#!/bin/bash
+find /var/log -type f -name "*.log" -mtime +7 -exec rm -f {} \;
+EOF
+
+# Service restart script
+cat <<EOF > /usr/local/bin/restart_services.sh
 #!/bin/bash
 systemctl restart nginx
+systemctl restart sshd
+EOF
 
-## Health Check Script
-if systemctl is-active nginx; then
-  echo "Running"
-else
-  echo "DOWN"
-fi
+# Health check script
+cat <<EOF > /usr/local/bin/health_check.sh
+#!/bin/bash
+echo "CPU Load:"
+uptime
+echo "Disk Usage:"
+df -h /
+echo "Memory Usage:"
+free -h
+EOF
+
+chmod +x /usr/local/bin/*.sh
+echo "✔ Scripts created at /usr/local/bin/"
+ls -l /usr/local/bin/*.sh
+echo

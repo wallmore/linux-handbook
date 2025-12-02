@@ -1,12 +1,5 @@
-# Log Management
-
-## View Logs
-tail -f /var/log/syslog
-tail -f /var/log/messages
-
-## Journal Logs
-journalctl -xe
-journalctl -u nginx
-
-## Clear Logs
-sudo truncate -s 0 /var/log/syslog
+#!/bin/bash
+# ---------- 3. Log Management ----------
+echo "➤ Top 10 largest log files in /var/log:"
+du -sh /var/log/* | sort -hr | head
+echo
